@@ -10,7 +10,8 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@types/node": "20.4.5",
@@ -27,6 +28,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@playwright/test": "^1.36.2",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "eslint-config-prettier": "^8.8.0",
