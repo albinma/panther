@@ -1,0 +1,10 @@
+.next
+.cache
+.gitignore
+.editorconfig
+.lintstagedrc
+public/
+node_modules/
+next-env.d.ts
+next.config.ts
+yarn.lock
