@@ -2,12 +2,11 @@ version: 2.1
 jobs:
   build_and_test:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:18.17
     environment:
       CI: 'true'
     steps:
       - checkout
-      - run: node --version
       - run:
           name: Install Dependencies
           command: yarn
@@ -25,7 +24,7 @@ jobs:
           command: yarn test:e2e
   preview_deployment:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:18.17
     environment:
       VERCEL_ORG_ID: ${VERCEL_ORG_ID}
       VERCEL_PROJECT_ID: ${VERCEL_PROJECT_ID}
@@ -47,7 +46,7 @@ jobs:
 
   production_deployment:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:18.17
     steps:
       - checkout
       - run: node --version
