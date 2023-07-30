@@ -66,16 +66,18 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  default:
     jobs:
       - build_and_test
-  preview_and_production:
-    jobs:
       - preview_deployment:
+          requires:
+            - build_and_test
           filters:
             branches:
               ignore: /main/
       - production_deployment:
+          requires:
+            - build_and_test
           filters:
             branches:
               only: /main/
