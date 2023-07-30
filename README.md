@@ -1,3 +1,5 @@
+# Project Panther [![CircleCI](https://dl.circleci.com/status-badge/img/gh/albinma/panther/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/albinma/panther/tree/main)
+
 ## Getting Started
 
 Copy env file:
