@@ -19,7 +19,7 @@ jobs:
           command: yarn build
       - run:
           name: Install Playwright
-          command: npx playwright install
+          command: npx playwright install --with-deps
       - run:
           name: Run Tests
           command: yarn test:e2e
