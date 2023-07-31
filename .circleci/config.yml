@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build_and_test:
     docker:
-      - image: cimg/node:18.17
+      - image: cimg/node:18.17-browsers
     environment:
       CI: 'true'
     steps:
@@ -11,16 +11,19 @@ jobs:
           name: Install Dependencies
           command: yarn
       - run:
-          name: Run Linting
+          name: Run Lint
           command: yarn lint
       - run:
           name: Build Project Artifacts
           command: yarn build
       - run:
+          name: Run Unit Tests
+          command: yarn test:ci
+      - run:
           name: Install Playwright
           command: npx playwright install --with-deps
       - run:
-          name: Run Tests
+          name: Run e2e tests
           command: yarn test:e2e
   preview_deployment:
     docker:
