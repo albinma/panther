@@ -11,16 +11,19 @@ jobs:
           name: Install Dependencies
           command: yarn
       - run:
-          name: Run Linting
+          name: Run Lint
           command: yarn lint
       - run:
           name: Build Project Artifacts
           command: yarn build
       - run:
+          name: Run Unit Tests
+          command: yarn test
+      - run:
           name: Install Playwright
           command: npx playwright install --with-deps
       - run:
-          name: Run Tests
+          name: Run e2e tests
           command: yarn test:e2e
   preview_deployment:
     docker:
