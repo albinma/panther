@@ -18,7 +18,7 @@ jobs:
           command: yarn build
       - run:
           name: Run Unit Tests
-          command: yarn test
+          command: yarn test:ci
       - run:
           name: Install Playwright
           command: npx playwright install --with-deps
