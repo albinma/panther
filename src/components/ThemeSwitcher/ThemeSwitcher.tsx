@@ -26,9 +26,10 @@ export default function ThemeSwitcher(): JSX.Element | undefined {
     <Button
       data-testid="theme-switcher"
       isIconOnly
-      onClick={() => toggleTheme()}
+      onPress={toggleTheme}
       color="default"
       variant="light"
+      aria-label="Toggle theme"
     >
       {theme === 'light' ? (
         <Icon.Sun
