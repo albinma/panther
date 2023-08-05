@@ -10,7 +10,11 @@ export default function Providers({
 }): JSX.Element {
   return (
     <NextUIProvider>
-      <NextThemesProvider attribute="class" enableSystem={true}>
+      <NextThemesProvider
+        attribute="class"
+        enableSystem={true}
+        defaultTheme="light"
+      >
         {children}
       </NextThemesProvider>
     </NextUIProvider>

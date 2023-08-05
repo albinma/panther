@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import * as Icon from 'react-feather';
+import { Button } from '@nextui-org/react';
 
 export default function ThemeSwitcher(): JSX.Element | undefined {
   const [mounted, setMounted] = useState(false);
@@ -22,12 +23,24 @@ export default function ThemeSwitcher(): JSX.Element | undefined {
   }
 
   return (
-    <button onClick={() => toggleTheme()}>
+    <Button
+      data-testid="theme-switcher"
+      isIconOnly
+      onClick={() => toggleTheme()}
+      color="default"
+      variant="light"
+    >
       {theme === 'light' ? (
-        <Icon.Sun className="h-6 w-6" />
+        <Icon.Sun
+          data-testid="theme-switcher-icon-light"
+          className="h-unit-6 w-unit-6"
+        />
       ) : (
-        <Icon.Moon className="h-6 w-6 text-slate-50" />
+        <Icon.Moon
+          data-testid="theme-switcher-icon-dark"
+          className="h-unit-6 w-unit-6 text-slate-50"
+        />
       )}
-    </button>
+    </Button>
   );
 }
