@@ -11,6 +11,7 @@ const ThemeSpy = (): JSX.Element => {
 describe('ThemeSwitcher', () => {
   let localStorageMock: { [key: string]: string } = {};
 
+  // https://github.com/pacocoursey/next-themes/issues/21
   beforeEach(() => {
     global.matchMedia = jest.fn((query) => ({
       matches: false,
