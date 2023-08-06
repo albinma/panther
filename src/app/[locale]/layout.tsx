@@ -5,7 +5,8 @@ import { Inter } from 'next/font/google';
 import cn from 'classnames';
 import Providers from '@/app/[locale]/providers';
 import { notFound } from 'next/navigation';
-import { NextIntlClientProvider } from 'next-intl';
+import { isRtlLang } from 'rtl-detect';
+import { FORMATS } from '@/i18n';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,14 +35,14 @@ export default async function RootLayout({
     notFound();
   }
 
+  const dir = isRtlLang(locale) ? 'rtl' : 'ltr';
+
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <body className={cn(inter.className, 'dark:bg-black bg-white')}>
-        <Providers>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <Header />
-            {children}
-          </NextIntlClientProvider>
+        <Providers locale={locale} messages={messages} formats={FORMATS}>
+          <Header />
+          {children}
         </Providers>
       </body>
     </html>

@@ -2,6 +2,7 @@ import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
 import React from 'react';
 import { render, fireEvent } from '@tests/utils';
 import { useTheme } from 'next-themes';
+import messages from '@/messages/en.json';
 
 const ThemeSpy = (): JSX.Element => {
   const { theme } = useTheme();
@@ -9,31 +10,6 @@ const ThemeSpy = (): JSX.Element => {
 };
 
 describe('ThemeSwitcher', () => {
-  let localStorageMock: { [key: string]: string } = {};
-
-  // https://github.com/pacocoursey/next-themes/issues/21
-  beforeEach(() => {
-    global.matchMedia = jest.fn((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }));
-
-    global.Storage.prototype.getItem = jest.fn(
-      (key: string) => localStorageMock[key],
-    );
-    global.Storage.prototype.setItem = jest.fn((key: string, value: string) => {
-      localStorageMock[key] = value;
-    });
-
-    localStorageMock = {};
-  });
-
   it('toggles the theme', async () => {
     const { getByTestId } = render(
       <>
@@ -50,10 +26,16 @@ describe('ThemeSwitcher', () => {
     fireEvent.click(button);
     expect(spy).toHaveTextContent('light');
     expect(getByTestId('theme-switcher-icon-light')).toBeInTheDocument();
+    expect(button.getAttribute('aria-label')).toBe(
+      messages.Components.ThemeSwitcher.SwitchToDarkMode,
+    );
 
     // second toggle should be dark
     fireEvent.click(button);
     expect(spy).toHaveTextContent('dark');
     expect(getByTestId('theme-switcher-icon-dark')).toBeInTheDocument();
+    expect(button.getAttribute('aria-label')).toBe(
+      messages.Components.ThemeSwitcher.SwitchToLightMode,
+    );
   });
 });

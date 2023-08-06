@@ -5317,15 +5317,14 @@ negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-next-intl@3.0.0-beta.9:
-  version "3.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-3.0.0-beta.9.tgz#e5b384f9fe1eccdd45fa85b8544488e0e028517e"
-  integrity sha512-pLDcRFWNCGSlYE9Mbm8fD19EtAgRoe5Fg579kr9NYiVZK8FfpObhrDMQzz9gVnqOOOoFUIgVqyQRFtXxmuU2IQ==
+next-intl@^2.19.1:
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/next-intl/-/next-intl-2.19.1.tgz#4fd9bb8cc4bceff604a577352a84102f1764794a"
+  integrity sha512-fk+IGWXxA+UOk+3rIhQqSPYxka+Hk9qKaIpbeF3nNlf8dp1td0oT6srVrPw/uZl5Qoj8El3qQ2mVd3RTLA25cg==
   dependencies:
     "@formatjs/intl-localematcher" "^0.2.32"
     negotiator "^0.6.3"
-    server-only "0.0.1"
-    use-intl "^2.19.0"
+    use-intl "^2.19.1"
 
 next-themes@^0.2.1:
   version "0.2.1"
@@ -6083,11 +6082,6 @@ semver@^7.3.7, semver@^7.5.3, semver@^7.5.4:
   dependencies:
     lru-cache "^6.0.0"
 
-server-only@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/server-only/-/server-only-0.0.1.tgz#0f366bb6afb618c37c9255a314535dc412cd1c9e"
-  integrity sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==
-
 shebang-command@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-2.0.0.tgz#ccd0af4f8835fbdc265b82461aaf0c36663f34ea"
@@ -6664,7 +6658,7 @@ use-composed-ref@^1.3.0:
   resolved "https://registry.yarnpkg.com/use-composed-ref/-/use-composed-ref-1.3.0.tgz#3d8104db34b7b264030a9d916c5e94fbe280dbda"
   integrity sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==
 
-use-intl@^2.19.0:
+use-intl@^2.19.1:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/use-intl/-/use-intl-2.19.1.tgz#4091a457342e3b90ca02aded0c0437766b6ccf9d"
   integrity sha512-nPsXwwJeH+RuKe2ucN+xmRI7DdfjA7WezXYTJD0JZSPvyIyaledIBlVBbnkxanr+3fpIec3cVG6wvouGp9/lJQ==

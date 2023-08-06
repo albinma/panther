@@ -1,5 +1,24 @@
-import { getRequestConfig } from 'next-intl/server';
+import { Formats } from 'next-intl';
 
-export default getRequestConfig(async ({ locale }) => ({
-  messages: (await import(`./messages/${locale}.json`)).default,
-}));
+export const DEFAULT_LOCALE = 'en';
+export const LOCALES = ['en', 'fr'];
+export const FORMATS: Formats = {
+  dateTime: {
+    short: {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    },
+  },
+  number: {
+    precise: {
+      maximumFractionDigits: 5,
+    },
+  },
+  list: {
+    enumeration: {
+      style: 'long',
+      type: 'conjunction',
+    },
+  },
+};

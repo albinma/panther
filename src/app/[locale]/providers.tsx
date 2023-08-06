@@ -1,22 +1,39 @@
 'use client';
 
 import { NextUIProvider } from '@nextui-org/react';
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
+import {
+  AbstractIntlMessages,
+  Formats,
+  NextIntlClientProvider,
+} from 'next-intl';
 
 export default function Providers({
   children,
+  locale,
+  messages,
+  formats,
 }: {
   children: React.ReactNode;
+  locale?: string;
+  messages?: AbstractIntlMessages;
+  formats?: Partial<Formats>;
 }): JSX.Element {
   return (
     <NextUIProvider>
-      <NextThemesProvider
-        attribute="class"
-        enableSystem={true}
-        defaultTheme="light"
+      <NextIntlClientProvider
+        locale={locale}
+        messages={messages}
+        formats={formats}
       >
-        {children}
-      </NextThemesProvider>
+        <ThemeProvider
+          attribute="class"
+          enableSystem={true}
+          defaultTheme="light"
+        >
+          {children}
+        </ThemeProvider>
+      </NextIntlClientProvider>
     </NextUIProvider>
   );
 }
