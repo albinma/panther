@@ -1,8 +1,0 @@
-{
-  "Components": {
-    "ThemeSwitcher": {
-      "SwitchToDarkMode": "Switch to dark mode",
-      "SwitchToLightMode": "Switch to light mode"
-    }
-  }
-}

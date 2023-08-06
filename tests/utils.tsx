@@ -4,8 +4,8 @@ import React, { ReactElement } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { ThemeProvider } from 'next-themes';
 import { NextIntlClientProvider } from 'next-intl';
-import messages from '@/messages/en.json';
-import { FORMATS } from '@/i18n';
+import messages from '@messages/en.json';
+import { NEXT_INTL_FORMATS } from '@/localization';
 
 interface TestProviderOptions {
   theme?: string;
@@ -27,7 +27,11 @@ const allProviders = ({
   children: React.ReactNode;
 }): JSX.Element => {
   return (
-    <NextIntlClientProvider locale={'en'} messages={messages} formats={FORMATS}>
+    <NextIntlClientProvider
+      locale={'en'}
+      messages={messages}
+      formats={NEXT_INTL_FORMATS}
+    >
       <ThemeProvider defaultTheme={theme}>{children}</ThemeProvider>
     </NextIntlClientProvider>
   );

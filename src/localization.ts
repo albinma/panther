@@ -1,8 +1,8 @@
 import { Formats } from 'next-intl';
 
 export const DEFAULT_LOCALE = 'en';
-export const LOCALES = ['en', 'fr'];
-export const FORMATS: Formats = {
+export const SUPPORTED_LOCALES = [DEFAULT_LOCALE, 'fr'];
+export const NEXT_INTL_FORMATS: Formats = {
   dateTime: {
     short: {
       day: 'numeric',
