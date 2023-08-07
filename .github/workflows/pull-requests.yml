@@ -1,4 +1,4 @@
-name: Pull request build and test
+name: Pull Request CI
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint_and_test:
-    name: Lint
+    name: Lint and Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,7 +20,7 @@ jobs:
       - run: yarn lint
       - run: yarn test
   test_setup:
-    name: Test setup
+    name: Test Setup
     runs-on: ubuntu-latest
     outputs:
       preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
@@ -33,7 +33,7 @@ jobs:
           max_timeout: 300
   test_e2e:
     needs: test_setup
-    name: Playwright tests
+    name: E2E Tests
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
