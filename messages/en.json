@@ -1,0 +1,17 @@
+{
+  "LocalLayout": {
+    "title": "Panther",
+    "description": "A-BAO"
+  },
+  "Pages": {
+    "Index": {
+      "test": "Test"
+    }
+  },
+  "Components": {
+    "ThemeSwitcher": {
+      "SwitchToDarkMode": "Switch to dark mode",
+      "SwitchToLightMode": "Switch to light mode"
+    }
+  }
+}

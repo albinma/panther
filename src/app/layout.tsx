@@ -1,30 +1,12 @@
-import Header from '@/components/Header/Header';
+import { ReactNode } from 'react';
 import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import cn from 'classnames';
-import Providers from '@/app/providers';
 
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Panther',
-  description: 'Panther App',
+type Props = {
+  children: ReactNode;
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}): JSX.Element {
-  return (
-    <html lang="en" className="light" suppressHydrationWarning>
-      <body className={cn(inter.className, 'dark:bg-black bg-white')}>
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
-      </body>
-    </html>
-  );
+// Since we have a `not-found.tsx` page on the root, a layout file
+// is required, even if it's just passing children through.
+export default function RootLayout({ children }: Props): ReactNode {
+  return children;
 }
