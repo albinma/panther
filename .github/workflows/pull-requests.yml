@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   lint_and_test:
     name: Lint and Unit Tests
@@ -19,6 +18,20 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn test:ci
+  database_setup:
+    name: Setup Preview Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install CockroachDB cloud CLI
+        run: curl https://binaries.cockroachdb.com/ccloud/ccloud_linux-amd64_0.1.1.tar.gz | tar -xz && cp -i ccloud /usr/local/bin/
+      - name: Check CockroachDB cloud CLI version
+        run: ccloud version
+      - name: Connect to CockroachDB preview cluster
+        run: ccloud cluster sql ${{ secrets.COCKROACHDB_PREVIEW_CLUSTER }} -u ${{ secrets.COCKROACHDB_PREVIEW_USERNAME }} -p ${{ secrets.COCKROACHDB_PREVIEW_PASSWORD }} -q
+      - name: Create database
+        run: CREATE DATABASE IF NOT EXISTS preview_${{ github.event.pull_request.head.sha }};
+      - name: Quit CockroachDB preview cluster
+        run: \q
   test_setup:
     name: Test Setup
     runs-on: ubuntu-latest
@@ -32,7 +45,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 300
   test_e2e:
-    needs: test_setup
+    needs: [test_setup, database_setup]
     name: E2E Tests
     timeout-minutes: 5
     runs-on: ubuntu-latest
