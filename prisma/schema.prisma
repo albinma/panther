@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DB_URL")
+}
+
+model Post {
+  id        Int      @id @default(sequence())
+  title     String   @db.String(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  content   String?
+  published Boolean  @default(false)
+  authorId  Int
+  User      User     @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Profile {
+  id     Int     @id @default(sequence())
+  bio    String?
+  userId Int     @unique
+  User   User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model User {
+  id       Int      @id @default(sequence())
+  name     String?  @db.String(255)
+  jobTitle String
+  email    String   @unique @db.String(255)
+  Post     Post[]
+  Profile  Profile?
+}

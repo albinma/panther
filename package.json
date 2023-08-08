@@ -14,10 +14,12 @@
     "prepare": "husky install",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "db:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@nextui-org/react": "^2.0.2",
+    "@prisma/client": "5.1.1",
     "autoprefixer": "10.4.14",
     "classnames": "^2.3.2",
     "eslint": "8.46.0",
@@ -55,6 +57,7 @@
     "prettier": "^3.0.0",
     "prettier-plugin-organize-imports": "^3.2.3",
     "prettier-plugin-tailwindcss": "^0.4.1",
+    "prisma": "5.1.1",
     "rimraf": "^5.0.1"
   }
 }
