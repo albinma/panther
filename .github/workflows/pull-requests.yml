@@ -42,7 +42,7 @@ jobs:
       - name: Setup database
         env:
           DB_URL: ${{steps.extract_db_url.outputs.db_url }}
-        run: DEBUG=* yarn db:migrate:dev
+        run: DEBUG=* yarn db:reset
       - name: Setup Vercel CLI
         run: yarn global add vercel@latest
       - name: Setup Vercel database url in preview environment
