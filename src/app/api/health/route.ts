@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(): Promise<NextResponse> {
   const userCount = await prisma.user.count();
 
