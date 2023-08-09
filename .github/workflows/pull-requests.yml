@@ -1,5 +1,8 @@
 name: Pull Request CI
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   pull_request:
     branches:
@@ -32,7 +35,17 @@ jobs:
       - name: Setup database
         env:
           DB_URL: postgresql://${{ secrets.COCKROACHDB_PREVIEW_USERNAME }}:${{ secrets.COCKROACHDB_PREVIEW_PASSWORD }}@${{ secrets.COCKROACHDB_PREVIEW_HOST }}:26257/${{ github.event.pull_request.head.sha }}?sslmode=verify-full
-        run: yarn prisma migrate dev
+        run: yarn db:migrate:dev
+      - name: Setup Vercel CLI
+        run: yarn global add vercel@latest
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+      - name: Setup Vercel database url in preview environment
+        run: |
+          echo $DB_URL > db_url.txt &
+          vercel env add DB_URL preview ${{ steps.extract_branch.outputs.branch }} --token=${{ secrets.VERCEL_TOKEN }} < db_url.txt
   test_setup:
     name: Test Setup
     runs-on: ubuntu-latest
