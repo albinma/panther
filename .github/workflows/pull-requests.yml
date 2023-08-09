@@ -62,6 +62,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 300
+          check_interval: 10
+          environment: preview
   test_e2e:
     needs: [test_setup, database_setup]
     name: E2E Tests
