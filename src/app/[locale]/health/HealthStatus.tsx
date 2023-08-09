@@ -1,7 +1,9 @@
 import getURL from '@/utils/getURL';
 
 async function getData(): Promise<{ status: string }> {
-  const res = await fetch(getURL('/api/health'));
+  const res = await fetch(getURL('/api/health'), {
+    headers: { 'X-Request-ID': 'Test' },
+  });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
