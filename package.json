@@ -16,7 +16,7 @@
     "test:ci": "jest --ci",
     "test:e2e": "playwright test",
     "db:migrate:dev": "prisma migrate dev",
-    "db:prepare": "prisma migrate reset"
+    "db:reset": "prisma migrate reset -f"
   },
   "dependencies": {
     "@nextui-org/react": "^2.0.2",

@@ -37,12 +37,12 @@ jobs:
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
       - name: Extract DB_URL
-        run: echo "db_url=postgresql://${{ secrets.COCKROACHDB_PREVIEW_USERNAME }}:${{ secrets.COCKROACHDB_PREVIEW_PASSWORD }}@${{ secrets.COCKROACHDB_PREVIEW_HOST }}:26257/panther_${{ steps.extract_branch.outputs.branch }}_${{ github.event.pull_request.head.sha }}?sslmode=verify-full" >> $GITHUB_OUTPUT
+        run: echo "db_url=postgresql://${{ secrets.COCKROACHDB_PREVIEW_USERNAME }}:${{ secrets.COCKROACHDB_PREVIEW_PASSWORD }}@${{ secrets.COCKROACHDB_PREVIEW_HOST }}:26257/panther_preview_${{ steps.extract_branch.outputs.branch }}?sslmode=verify-full" >> $GITHUB_OUTPUT
         id: extract_db_url
       - name: Setup database
         env:
           DB_URL: ${{steps.extract_db_url.outputs.db_url }}
-        run: DEBUG=* yarn db:migrate:dev
+        run: yarn db:migrate:dev
       - name: Setup Vercel CLI
         run: yarn global add vercel@latest
       - name: Setup Vercel database url in preview environment
