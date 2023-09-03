@@ -7,6 +7,7 @@ import {
   Formats,
   NextIntlClientProvider,
 } from 'next-intl';
+import { SessionProvider } from 'next-auth/react';
 
 export default function Providers({
   children,
@@ -31,7 +32,7 @@ export default function Providers({
           enableSystem={true}
           defaultTheme="light"
         >
-          {children}
+          <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
       </NextIntlClientProvider>
     </NextUIProvider>
