@@ -17,6 +17,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.1.0",
     "@nextui-org/react": "^2.1.10",
     "autoprefixer": "10.4.15",
     "classnames": "^2.3.2",

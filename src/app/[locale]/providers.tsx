@@ -7,6 +7,7 @@ import {
   Formats,
   NextIntlClientProvider,
 } from 'next-intl';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export default function Providers({
   children,
@@ -31,7 +32,7 @@ export default function Providers({
           enableSystem={true}
           defaultTheme="light"
         >
-          {children}
+          <UserProvider>{children}</UserProvider>
         </ThemeProvider>
       </NextIntlClientProvider>
     </NextUIProvider>
