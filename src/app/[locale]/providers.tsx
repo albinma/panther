@@ -32,7 +32,9 @@ export default function Providers({
           enableSystem={true}
           defaultTheme="light"
         >
-          <SessionProvider>{children}</SessionProvider>
+          <SessionProvider refetchOnWindowFocus refetchInterval={5}>
+            {children}
+          </SessionProvider>
         </ThemeProvider>
       </NextIntlClientProvider>
     </NextUIProvider>

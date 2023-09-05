@@ -10,6 +10,10 @@ export default function AuthProfile(): JSX.Element {
   return (
     <>
       <p>{session.status}</p>
+      <p>
+        {session.data?.user.publicAddress} - {session.data?.user.role}
+      </p>
+      <p>{session.data?.expires}</p>
       {session.status !== 'authenticated' ? (
         <MetamaskLoginButton />
       ) : (
