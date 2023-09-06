@@ -15,7 +15,7 @@ export default function ConnectButton(): JSX.Element | null {
       if (data) {
         try {
           // Send the public address to generate a nonce associates with our account
-          const authRes = await fetch('api/auth/authorize', {
+          const authRes = await fetch('api/auth/begin', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export default function ConnectButton(): JSX.Element | null {
           });
 
           // Once we have the signed message, send it back to the server to verify and get a token
-          const verifyRes = await fetch('api/auth/token', {
+          const verifyRes = await fetch('api/auth/verify', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

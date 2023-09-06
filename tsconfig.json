@@ -31,7 +31,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "jest.setup.js",
-    "src/app/api/auth/token"
+    "src/app/api/auth/verify"
   ],
   "exclude": ["node_modules"]
 }
