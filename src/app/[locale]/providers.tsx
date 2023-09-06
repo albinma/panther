@@ -9,6 +9,11 @@ import {
 } from 'next-intl';
 import { SessionProvider } from 'next-auth/react';
 
+import { WagmiConfig, configureChains, createConfig } from 'wagmi';
+import { mainnet, sepolia } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+
 export default function Providers({
   children,
   locale,
@@ -20,6 +25,25 @@ export default function Providers({
   messages?: AbstractIntlMessages;
   formats?: Partial<Formats>;
 }): JSX.Element {
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
+    [mainnet, sepolia],
+    [publicProvider()],
+  );
+
+  const wagmiConfig = createConfig({
+    autoConnect: true,
+    connectors: [
+      new MetaMaskConnector({
+        chains,
+        options: {
+          shimDisconnect: true,
+          UNSTABLE_shimOnConnectSelectAccount: true,
+        },
+      }),
+    ],
+    publicClient,
+    webSocketPublicClient,
+  });
   return (
     <NextUIProvider>
       <NextIntlClientProvider
@@ -32,8 +56,8 @@ export default function Providers({
           enableSystem={true}
           defaultTheme="light"
         >
-          <SessionProvider refetchOnWindowFocus refetchInterval={5}>
-            {children}
+          <SessionProvider refetchOnWindowFocus refetchInterval={5 * 60}>
+            <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
           </SessionProvider>
         </ThemeProvider>
       </NextIntlClientProvider>
