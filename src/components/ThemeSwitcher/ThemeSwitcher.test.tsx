@@ -1,8 +1,7 @@
 import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
-import React from 'react';
-import { render, fireEvent } from '@tests/utils';
-import { useTheme } from 'next-themes';
 import messages from '@messages/en.json';
+import { fireEvent, render } from '@tests/utils';
+import { useTheme } from 'next-themes';
 
 const ThemeSpy = (): JSX.Element => {
   const { theme } = useTheme();

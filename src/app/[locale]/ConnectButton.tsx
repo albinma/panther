@@ -1,6 +1,8 @@
 'use client';
 
 import ClientOnly from '@/components/ClientOnly/ClientOnly';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import {
   ConnectorData,
   useAccount,
@@ -8,8 +10,6 @@ import {
   useDisconnect,
   useSignMessage,
 } from 'wagmi';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 
 export default function ConnectButton(): JSX.Element | null {
   const { status, data } = useSession();

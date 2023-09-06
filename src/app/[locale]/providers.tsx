@@ -1,18 +1,18 @@
 'use client';
 
 import { NextUIProvider } from '@nextui-org/react';
-import { ThemeProvider } from 'next-themes';
+import { SessionProvider } from 'next-auth/react';
 import {
   AbstractIntlMessages,
   Formats,
   NextIntlClientProvider,
 } from 'next-intl';
-import { SessionProvider } from 'next-auth/react';
+import { ThemeProvider } from 'next-themes';
 
 import { WagmiConfig, configureChains, createConfig } from 'wagmi';
 import { mainnet, sepolia } from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { publicProvider } from 'wagmi/providers/public';
 
 export default function Providers({
   children,

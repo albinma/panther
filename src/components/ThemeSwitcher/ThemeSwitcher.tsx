@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import * as Icon from 'react-feather';
 import { Button } from '@nextui-org/react';
 import { useTranslations } from 'next-intl';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import * as Icon from 'react-feather';
 
 export default function ThemeSwitcher(): JSX.Element | undefined {
   const [mounted, setMounted] = useState(false);

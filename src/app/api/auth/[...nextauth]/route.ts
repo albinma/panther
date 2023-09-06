@@ -1,8 +1,7 @@
-import NextAuth from 'next-auth';
+import { decode, sign, verify } from 'jsonwebtoken';
+import NextAuth, { User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { User } from 'next-auth';
-import { sign, decode, verify } from 'jsonwebtoken';
 
 const refreshAccessToken = async (token: JWT): Promise<JWT> => {
   try {
