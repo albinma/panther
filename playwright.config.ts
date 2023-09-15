@@ -50,7 +50,8 @@ export default defineConfig({
     //   ignoreHTTPSErrors: true,
     // },
     video: 'retain-on-failure',
-    trace: 'retain-on-failure',
+    // TODO: restore after bug is fixed: https://github.com/microsoft/playwright/issues/27073
+    // trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
 
