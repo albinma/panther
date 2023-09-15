@@ -33,10 +33,8 @@ export default function ThemeSwitcher(): JSX.Element | undefined {
   return (
     <Button
       data-testid="theme-switcher"
-      isIconOnly
       onPress={toggleTheme}
       color="default"
-      variant="light"
       aria-label={ariaLabel}
     >
       {isLightMode ? (
