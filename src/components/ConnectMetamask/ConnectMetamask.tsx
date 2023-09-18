@@ -160,7 +160,6 @@ export default function ConnectMetamask(): JSX.Element | null {
       >
         {authenticationStatus === 'authenticated' ? 'Disconnect' : 'Connect'}
       </Button>
-      <Button onClick={() => disconnectAsync()}>Disconnect</Button>
     </ClientOnly>
   );
 }

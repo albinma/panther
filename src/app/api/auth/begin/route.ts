@@ -1,3 +1,4 @@
+import { getBasicAuthenticationHeader } from '@/utils/server';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -8,6 +9,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getBasicAuthenticationHeader(),
     },
     body: JSON.stringify({
       publicAddress,

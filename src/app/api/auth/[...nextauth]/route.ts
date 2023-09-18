@@ -1,3 +1,4 @@
+import { getBasicAuthenticationHeader } from '@/utils/server';
 import { decode, sign, verify } from 'jsonwebtoken';
 import NextAuth, { User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
@@ -9,7 +10,10 @@ const refreshAccessToken = async (token: JWT): Promise<JWT> => {
     const { refreshToken } = token;
     const res = await fetch(process.env.AUTH_ISSUER + '/auth/refresh', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getBasicAuthenticationHeader(),
+      },
       body: JSON.stringify({ refreshToken }),
     });
 
@@ -71,6 +75,7 @@ const handler = NextAuth({
           headers: {
             'Content-Type': 'application/json',
             Cookie: `${nonceCookie.name}=${nonceCookie.value}`,
+            Authorization: getBasicAuthenticationHeader(),
           },
           body: JSON.stringify({ publicAddress, message, signature }),
         });
