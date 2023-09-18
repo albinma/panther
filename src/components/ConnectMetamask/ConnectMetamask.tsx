@@ -4,6 +4,7 @@ import ClientOnly from '@/components/ClientOnly/ClientOnly';
 import { Button } from '@nextui-org/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { SiweMessage } from 'siwe';
 import {
   ConnectorData,
   useAccount,
@@ -33,7 +34,7 @@ export default function ConnectMetamask(): JSX.Element | null {
       }
 
       if (data) {
-        await verifyAndSignIn(data.account);
+        await verifyAndSignIn(data.account, data.chain?.id);
       }
     },
   });
@@ -45,7 +46,10 @@ export default function ConnectMetamask(): JSX.Element | null {
         : 'unauthenticated',
     );
 
-  const verifyAndSignIn = async (publicAddress: string): Promise<void> => {
+  const verifyAndSignIn = async (
+    publicAddress: string,
+    chainId?: number,
+  ): Promise<void> => {
     if (isConnected) {
       try {
         // Send the public address to generate a nonce associates with our account
@@ -63,15 +67,30 @@ export default function ConnectMetamask(): JSX.Element | null {
           throw new Error('Error connecting to server');
         }
 
-        const { unsignedMessage } = await authRes.json();
+        const { nonce } = await authRes.json();
+        const domain = window.location.host;
+        const origin = window.location.origin;
+        const statement = 'Connect to Panther App';
+        const siweMessage = new SiweMessage({
+          domain,
+          address: publicAddress,
+          statement,
+          uri: origin,
+          version: '1',
+          chainId,
+          nonce,
+        });
+
+        const message = siweMessage.prepareMessage();
 
         const signature = await signMessageAsync({
-          message: unsignedMessage,
+          message,
         });
 
         // Use NextAuth to sign in with our address and the nonce
         await signIn('crypto', {
           publicAddress,
+          message,
           signature,
           redirect: false,
         });
@@ -93,11 +112,12 @@ export default function ConnectMetamask(): JSX.Element | null {
     if (activeConnector) {
       const handleConnectorUpdate = async ({
         account,
+        chain,
       }: ConnectorData): Promise<void> => {
         await signOut({ redirect: false });
 
         if (account) {
-          await verifyAndSignIn(account);
+          await verifyAndSignIn(account, chain?.id);
         }
       };
 
@@ -115,7 +135,7 @@ export default function ConnectMetamask(): JSX.Element | null {
     if (isConnected && status === 'authenticated') {
       setAuthenticationStatus('authenticated');
     } else if (isConnected && status !== 'authenticated') {
-      setAuthenticationStatus('authenticating');
+      setAuthenticationStatus('unauthenticated');
     } else {
       setAuthenticationStatus(
         isConnecting || isReconnecting ? 'authenticating' : 'unauthenticated',
@@ -140,6 +160,7 @@ export default function ConnectMetamask(): JSX.Element | null {
       >
         {authenticationStatus === 'authenticated' ? 'Disconnect' : 'Connect'}
       </Button>
+      <Button onClick={() => disconnectAsync()}>Disconnect</Button>
     </ClientOnly>
   );
 }

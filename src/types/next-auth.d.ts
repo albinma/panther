@@ -15,20 +15,16 @@ declare module 'next-auth' {
       accessToken?: string;
       refreshToken?: string;
       publicAddress: string;
-      emailVerified: boolean;
+      isAdmin: boolean;
       exp: number;
-      role: string;
     } & DefaultSession['user'];
   }
 
   interface User {
+    publicAddress: string;
     accessToken?: string;
     refreshToken?: string;
-    id: string;
-    publicAddress: string;
-    email?: string;
-    emailVerified: boolean;
+    isAdmin: boolean;
     exp: number;
-    role: string;
   }
 }

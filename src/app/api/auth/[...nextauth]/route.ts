@@ -2,11 +2,12 @@ import { decode, sign, verify } from 'jsonwebtoken';
 import NextAuth, { User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
 
 const refreshAccessToken = async (token: JWT): Promise<JWT> => {
   try {
     const { refreshToken } = token;
-    const res = await fetch(process.env.AUTH_ISSUER + '/auth/refresh-token', {
+    const res = await fetch(process.env.AUTH_ISSUER + '/auth/refresh', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ refreshToken }),
@@ -18,11 +19,24 @@ const refreshAccessToken = async (token: JWT): Promise<JWT> => {
       throw data;
     }
 
+    const { accessToken, refreshToken: newRefreshToken } = data;
+
+    const payload = verify(accessToken, process.env.AUTH_SECRET, {
+      audience: process.env.AUTH_AUDIENCE,
+      issuer: process.env.AUTH_ISSUER,
+    });
+
+    if (!payload) {
+      throw new Error('InvalidAccessToken');
+    }
+
+    const { exp } = payload as { exp: number };
+
     return {
       ...token,
-      accessToken: data.access_token,
-      refreshToken: data.refresh_token,
-      exp: data.expires_in,
+      accessToken,
+      refreshToken: newRefreshToken,
+      exp,
     };
   } catch (error) {
     await fetch('/api/auth/signout');
@@ -37,6 +51,7 @@ const handler = NextAuth({
       name: 'Crypto Wallet Auth',
       credentials: {
         publicAddress: { label: 'Public Address', type: 'text' },
+        message: { label: 'Message', type: 'text' },
         signature: { label: 'Signature', type: 'text' },
       },
       authorize: async (credentials): Promise<User | null> => {
@@ -44,29 +59,40 @@ const handler = NextAuth({
           return null;
         }
 
-        const { publicAddress, signature } = credentials;
+        const { publicAddress, message, signature } = credentials;
+        const nonceCookie = cookies().get('sesame-bun');
 
-        const res = await fetch(process.env.AUTH_ISSUER + '/auth/token', {
+        if (!nonceCookie) {
+          return null;
+        }
+
+        const res = await fetch(process.env.AUTH_ISSUER + '/auth/complete', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ publicAddress, signature }),
+          headers: {
+            'Content-Type': 'application/json',
+            Cookie: `${nonceCookie.name}=${nonceCookie.value}`,
+          },
+          body: JSON.stringify({ publicAddress, message, signature }),
         });
 
         if (!res.ok) {
           return null;
         }
 
+        cookies().delete('sesame-bun');
+
         const data: {
-          access_token: string;
-          refresh_token?: string;
-          expires_in?: number;
+          accessToken: string;
+          refreshToken?: string;
         } = await res.json();
 
-        if (!data || !data.access_token) {
+        if (!data || !data.accessToken || !data.refreshToken) {
           return null;
         }
 
-        const payload = verify(data.access_token, process.env.AUTH_SECRET, {
+        const { accessToken, refreshToken } = data;
+
+        const payload = verify(accessToken, process.env.AUTH_SECRET, {
           audience: process.env.AUTH_AUDIENCE,
           issuer: process.env.AUTH_ISSUER,
         });
@@ -75,25 +101,19 @@ const handler = NextAuth({
           return null;
         }
 
-        const { sub, public_address, email, email_verified, role, exp } =
-          payload as {
-            sub: string;
-            public_address: string;
-            email?: string;
-            email_verified: boolean;
-            role: string;
-            exp: number;
-          };
+        const { sub, isAdmin, exp } = payload as {
+          sub: string;
+          isAdmin: boolean;
+          exp: number;
+        };
 
         const user = {
-          accessToken: data.access_token,
-          refreshToken: data.refresh_token,
+          publicAddress,
+          accessToken,
+          refreshToken,
           id: sub,
-          publicAddress: public_address,
-          email,
-          emailVerified: email_verified,
+          isAdmin,
           exp,
-          role,
         };
 
         return user;
