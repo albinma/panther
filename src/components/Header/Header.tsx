@@ -1,6 +1,6 @@
 'use client';
 
-import ConnectMetamask from '@/components/ConnectMetamask/ConnectMetamask';
+import ConnectWallet from '@/components/ConnectWallet/ConnectWallet';
 import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
 import {
   Navbar,
@@ -23,7 +23,7 @@ export default function Header(): JSX.Element {
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem>
-          <ConnectMetamask />
+          <ConnectWallet />
         </NavbarItem>
         <NavbarItem>
           <ThemeSwitcher />

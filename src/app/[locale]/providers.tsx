@@ -35,10 +35,7 @@ export default function Providers({
     connectors: [
       new MetaMaskConnector({
         chains,
-        options: {
-          shimDisconnect: true,
-          UNSTABLE_shimOnConnectSelectAccount: true,
-        },
+        options: {},
       }),
     ],
     publicClient,
