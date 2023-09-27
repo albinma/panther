@@ -13,6 +13,9 @@ const config = createConfig({
     // Only support metamask for now
     new MetaMaskConnector({
       chains,
+      options: {
+        shimDisconnect: true,
+      },
     }),
   ],
   publicClient,

@@ -1,5 +1,6 @@
 'use client';
 
+import ConnectWallet from '@/components/ConnectWallet/ConnectWallet';
 import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher';
 import {
   Navbar,
@@ -21,6 +22,9 @@ export default function Header(): JSX.Element {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
+        <NavbarItem>
+          <ConnectWallet />
+        </NavbarItem>
         <NavbarItem>
           <ThemeSwitcher />
         </NavbarItem>
