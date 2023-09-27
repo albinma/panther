@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import enMessages from '../../messages/en.json';
 import frMessages from '../../messages/fr.json';
 

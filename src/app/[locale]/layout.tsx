@@ -1,13 +1,13 @@
-import Header from '@/components/Header/Header';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import cn from 'classnames';
 import Providers from '@/app/[locale]/providers';
-import { notFound } from 'next/navigation';
-import { isRtlLang } from 'rtl-detect';
-import { createTranslator } from 'next-intl';
+import Header from '@/components/Header/Header';
 import { NEXT_INTL_FORMATS, SUPPORTED_LOCALES } from '@/localization';
+import cn from 'classnames';
+import type { Metadata } from 'next';
+import { createTranslator } from 'next-intl';
+import { Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
+import { isRtlLang } from 'rtl-detect';
 
 const inter = Inter({ subsets: ['latin'] });
 

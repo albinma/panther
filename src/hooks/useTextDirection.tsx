@@ -1,5 +1,5 @@
-import { isRtlLang } from 'rtl-detect';
 import { useLocale } from 'next-intl';
+import { isRtlLang } from 'rtl-detect';
 
 export default function useTextDirection(locale?: string): string {
   const defaultLocale = useLocale();

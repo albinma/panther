@@ -1,11 +1,11 @@
 // https://testing-library.com/docs/react-testing-library/setup/#custom-render
 
-import React, { ReactElement } from 'react';
-import { render, RenderOptions, RenderResult } from '@testing-library/react';
-import { ThemeProvider } from 'next-themes';
-import { NextIntlClientProvider } from 'next-intl';
-import messages from '@messages/en.json';
 import { NEXT_INTL_FORMATS } from '@/localization';
+import messages from '@messages/en.json';
+import { render, RenderOptions, RenderResult } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
+import { ThemeProvider } from 'next-themes';
+import React, { ReactElement } from 'react';
 
 interface TestProviderOptions {
   theme?: string;
