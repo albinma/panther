@@ -7,6 +7,8 @@ import {
   Formats,
   NextIntlClientProvider,
 } from 'next-intl';
+import { WagmiConfig } from 'wagmi';
+import wagmiConfig from '@/configs/wagmi';
 
 export default function Providers({
   children,
@@ -31,7 +33,7 @@ export default function Providers({
           enableSystem={true}
           defaultTheme="light"
         >
-          {children}
+          <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
         </ThemeProvider>
       </NextIntlClientProvider>
     </NextUIProvider>
